@@ -1,16 +1,13 @@
 class options {
   gap: number
-  comment: string
 
   constructor() {
     this.gap = 2
-    this.comment = ''
   }
 }
 
 export class objectConverter {
   _gap
-  _comment
   _schema = ""
   _offset = 0
 
@@ -21,7 +18,6 @@ export class objectConverter {
       fn(opt)
     }
     this._gap = opt.gap
-    this._comment = opt.comment
     this._init()
   }
 
@@ -32,7 +28,7 @@ export class objectConverter {
   }
 
   _writeLine(content: string) {
-    this._schema += `${this._comment}${this._offsetter()}${content}\n`
+    this._schema += `${this._offsetter()}${content}\n`
   }
 
   _offsetter() {
