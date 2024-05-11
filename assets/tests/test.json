@@ -1,0 +1,13 @@
+{
+  "account": "myAccount",
+  "password": "myPassword",
+  "enabled": true,
+  "createDate": "2016-01-01T00:00:00Z",
+  "userNo": 578456,
+  "address": {
+    "city": "myCity",
+    "street": "myStreet",
+    "zip": "myZip"
+  },
+  "phone": ["1234567890", "0987654321"]
+}

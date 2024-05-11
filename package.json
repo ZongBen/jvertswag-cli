@@ -1,0 +1,16 @@
+{
+  "name": "jvertswag",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "prettier": "3.2.5"
+  },
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "format": "bun prettier . --write"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
