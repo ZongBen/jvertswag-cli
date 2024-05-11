@@ -1,17 +1,38 @@
+class options {
+  gap: number
+  comment: string
+
+  constructor() {
+    this.gap = 2
+    this.comment = ''
+  }
+}
+
 export class objectConverter {
-  _gap = 2
+  _gap
+  _comment
   _schema = ""
   _offset = 0
 
-  constructor(gap: number) {
-    this._gap = gap
+
+  constructor(fn?: (options: options) => void) {
+    const opt = new options()
+    if (fn) {
+      fn(opt)
+    }
+    this._gap = opt.gap
+    this._comment = opt.comment
     this._init()
   }
 
   _init() {
-    this._schema += `${this._offsetter()}type: object\n`
-    this._schema += `${this._offsetter()}properties:\n`
+    this._writeLine('type: object')
+    this._writeLine('properties:')
     this._addOffset(1)
+  }
+
+  _writeLine(content: string) {
+    this._schema += `${this._comment}${this._offsetter()}${content}\n`
   }
 
   _offsetter() {
@@ -31,33 +52,33 @@ export class objectConverter {
 
     if (valueType === "object") {
       if (Array.isArray(value)) {
-        this._schema += `${this._offsetter()}${key}:\n`
+        this._writeLine(`${key}:`)
         this._addOffset(1)
-        this._schema += `${this._offsetter()}type: array\n`
-        this._schema += `${this._offsetter()}items:\n`
+        this._writeLine('type: array')
+        this._writeLine('items:')
         this._addOffset(1)
-        this._schema += `${this._offsetter()}type: any\n`
+        this._writeLine('type: any')
       } else {
-        this._schema += `${this._offsetter()}${key}:\n`
+        this._writeLine(`${key}:`)
         this._addOffset(1)
         this._init()
         this.toSchema(value)
         this._addOffset(-2)
       }
     } else if (valueType === "string") {
-      this._schema += `${this._offsetter()}${key}:\n`
+      this._writeLine(`${key}:`)
       this._addOffset(1)
-      this._schema += `${this._offsetter()}type: string\n`
+      this._writeLine('type: string')
       this._addOffset(-1)
       if (this._isDate(value)) {
         this._addOffset(1)
-        this._schema += `${this._offsetter()}format: date\n`
+        this._writeLine('format: date')
         this._addOffset(-1)
       }
     } else if (valueType === "number") {
-      this._schema += `${this._offsetter()}${key}:\n`
+      this._writeLine(`${key}:`)
       this._addOffset(1)
-      this._schema += `${this._offsetter()}type: number\n`
+      this._writeLine('type: number')
       this._addOffset(-1)
     }
   }
