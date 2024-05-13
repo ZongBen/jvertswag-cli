@@ -54,6 +54,7 @@ export class objectConverter {
         this._writeLine('items:')
         this._addOffset(1)
         this._writeLine('type: any')
+        this._addOffset(-2)
       } else {
         this._writeLine(`${key}:`)
         this._addOffset(1)
