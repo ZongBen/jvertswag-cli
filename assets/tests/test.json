@@ -9,5 +9,9 @@
     "street": "myStreet",
     "zip": "myZip"
   },
-  "phone": ["1234567890", "0987654321"]
+  "nulltest": null,
+  "phone": [
+    "1234567890",
+    "0987654321"
+  ]
 }

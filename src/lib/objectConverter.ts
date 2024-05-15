@@ -82,7 +82,7 @@ export class objectConverter {
 
   toSchema(object: any) {
     Object.keys(object).forEach((key) => {
-      this._addSchemaLine(key, object[key])
+      this._addSchemaLine(key, object[key] ?? '')
     })
     return this._schema
   }
