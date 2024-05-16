@@ -48,21 +48,14 @@ export class swagConverter {
     return !isNaN(Date.parse(value))
   }
 
-  _addSchemaLine(key: string, value: string) {
+  _addProperty(key: string, value: string) {
     const valueType = typeof value
 
     if (valueType === "object") {
-      if (Array.isArray(value)) {
-        this._writeLine(`${key}:`)
-        this._addOffset(1)
-        this._executeConversion(value)
-        this._addOffset(-2)
-      } else {
-        this._writeLine(`${key}:`)
-        this._addOffset(1)
-        this._executeConversion(value)
-        this._addOffset(-2)
-      }
+      this._writeLine(`${key}:`)
+      this._addOffset(1)
+      this._executeConversion(value)
+      this._addOffset(-2)
     } else if (valueType === "string") {
       this._writeLine(`${key}:`)
       this._addOffset(1)
@@ -84,7 +77,7 @@ export class swagConverter {
   _executeConversion(target: any) {
     const isArray = Array.isArray(target)
     this._init(isArray)
-    const item = isArray ? target.length > 0 ? target[0] : null : target
+    const item = isArray ? target.length > 0 ? target[0] : undefined : target
     const itemType = typeof item
 
     if (itemType === "string") {
@@ -95,8 +88,11 @@ export class swagConverter {
     }
     else if (itemType === "object") {
       for (const key in item) {
-        this._addSchemaLine(key, item[key] ?? '')
+        this._addProperty(key, item[key] ?? '')
       }
+    }
+    else {
+      this._writeLine('type: undefined')
     }
   }
 
