@@ -11,7 +11,6 @@ export class swagConverter {
   _schema = ""
   _offset = 0
 
-
   constructor(fn?: (options: options) => void) {
     const opt = new options()
     if (fn) {
@@ -86,13 +85,15 @@ export class swagConverter {
     const isArray = Array.isArray(target)
     this._init(isArray)
     const item = isArray ? target.length > 0 ? target[0] : null : target
-    if (typeof item === "string") {
+    const itemType = typeof item
+
+    if (itemType === "string") {
       this._writeLine('type: string')
     }
-    else if (typeof item === "number") {
+    else if (itemType === "number") {
       this._writeLine('type: number')
     }
-    else if (typeof item === "object") {
+    else if (itemType === "object") {
       for (const key in item) {
         this._addSchemaLine(key, item[key] ?? '')
       }
