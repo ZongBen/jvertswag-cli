@@ -48,7 +48,7 @@ export class swagConverter {
     return !isNaN(Date.parse(value))
   }
 
-  _addProperty(key: string, value: string) {
+  _addProperty(key: string, value: any) {
     const valueType = typeof value
 
     if (valueType === "object") {
@@ -72,6 +72,12 @@ export class swagConverter {
       this._writeLine('type: number')
       this._addOffset(-1)
     }
+    else {
+      this._writeLine(`${key}:`)
+      this._addOffset(1)
+      this._writeLine('type: undefined')
+      this._addOffset(-1)
+    }
   }
 
   _executeConversion(target: any) {
@@ -88,7 +94,7 @@ export class swagConverter {
     }
     else if (itemType === "object") {
       for (const key in item) {
-        this._addProperty(key, item[key] ?? '')
+        this._addProperty(key, item[key] ?? undefined)
       }
     }
     else {
