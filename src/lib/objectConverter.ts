@@ -6,7 +6,7 @@ class options {
   }
 }
 
-export class objectConverter {
+export class swagConverter {
   _gap
   _schema = ""
   _offset = 0
@@ -18,13 +18,19 @@ export class objectConverter {
       fn(opt)
     }
     this._gap = opt.gap
-    this._init()
   }
 
-  _init() {
-    this._writeLine('type: object')
-    this._writeLine('properties:')
-    this._addOffset(1)
+  _init(isArray: boolean) {
+    if (isArray) {
+      this._writeLine('type: array')
+      this._writeLine('items:')
+      this._addOffset(1)
+    }
+    else {
+      this._writeLine('type: object')
+      this._writeLine('properties:')
+      this._addOffset(1)
+    }
   }
 
   _writeLine(content: string) {
@@ -50,16 +56,12 @@ export class objectConverter {
       if (Array.isArray(value)) {
         this._writeLine(`${key}:`)
         this._addOffset(1)
-        this._writeLine('type: array')
-        this._writeLine('items:')
-        this._addOffset(1)
-        this._writeLine('type: any')
+        this._executeConversion(value)
         this._addOffset(-2)
       } else {
         this._writeLine(`${key}:`)
         this._addOffset(1)
-        this._init()
-        this.toSchema(value)
+        this._executeConversion(value)
         this._addOffset(-2)
       }
     } else if (valueType === "string") {
@@ -80,10 +82,25 @@ export class objectConverter {
     }
   }
 
-  toSchema(object: any) {
-    Object.keys(object).forEach((key) => {
-      this._addSchemaLine(key, object[key] ?? '')
-    })
+  _executeConversion(target: any) {
+    const isArray = Array.isArray(target)
+    this._init(isArray)
+    const item = isArray ? target.length > 0 ? target[0] : null : target
+    if (typeof item === "string") {
+      this._writeLine('type: string')
+    }
+    else if (typeof item === "number") {
+      this._writeLine('type: number')
+    }
+    else if (typeof item === "object") {
+      for (const key in item) {
+        this._addSchemaLine(key, item[key] ?? '')
+      }
+    }
+  }
+
+  toSchema(target: any) {
+    this._executeConversion(target)
     return this._schema
   }
 }

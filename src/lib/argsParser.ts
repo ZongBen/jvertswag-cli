@@ -14,6 +14,23 @@ export class argsParser {
           short: "g",
           default: "2",
         },
+        method: {
+          type: "string",
+          short: "X"
+        },
+        header: {
+          type: "string",
+          short: "H",
+          multiple: true,
+        },
+        data: {
+          type: "string",
+          short: "d"
+        },
+        url: {
+          type: "string",
+          short: "u"
+        }
       },
       strict: true,
       allowPositionals: true,
