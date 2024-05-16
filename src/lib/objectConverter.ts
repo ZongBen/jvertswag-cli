@@ -75,6 +75,12 @@ export class swagConverter {
         this._writeLine('type: number')
         this._addOffset(-1)
         break
+      case "boolean":
+        this._writeLine(`${key}:`)
+        this._addOffset(1)
+        this._writeLine('type: boolean')
+        this._addOffset(-1)
+        break
       default:
         this._writeLine(`${key}:`)
         this._addOffset(1)
