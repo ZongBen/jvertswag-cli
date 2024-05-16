@@ -51,32 +51,35 @@ export class swagConverter {
   _addProperty(key: string, value: any) {
     const valueType = typeof value
 
-    if (valueType === "object") {
-      this._writeLine(`${key}:`)
-      this._addOffset(1)
-      this._executeConversion(value)
-      this._addOffset(-2)
-    } else if (valueType === "string") {
-      this._writeLine(`${key}:`)
-      this._addOffset(1)
-      this._writeLine('type: string')
-      this._addOffset(-1)
-      if (this._isDate(value)) {
+    switch (valueType) {
+      case "object":
+        this._writeLine(`${key}:`)
         this._addOffset(1)
-        this._writeLine('format: date')
+        this._executeConversion(value)
+        this._addOffset(-2)
+        break
+      case "string":
+        this._writeLine(`${key}:`)
+        this._addOffset(1)
+        this._writeLine('type: string')
         this._addOffset(-1)
-      }
-    } else if (valueType === "number") {
-      this._writeLine(`${key}:`)
-      this._addOffset(1)
-      this._writeLine('type: number')
-      this._addOffset(-1)
-    }
-    else {
-      this._writeLine(`${key}:`)
-      this._addOffset(1)
-      this._writeLine('type: undefined')
-      this._addOffset(-1)
+        if (this._isDate(value)) {
+          this._addOffset(1)
+          this._writeLine('format: date')
+          this._addOffset(-1)
+        }
+        break
+      case "number":
+        this._writeLine(`${key}:`)
+        this._addOffset(1)
+        this._writeLine('type: number')
+        this._addOffset(-1)
+        break
+      default:
+        this._writeLine(`${key}:`)
+        this._addOffset(1)
+        this._writeLine('type: undefined')
+        this._addOffset(-1)
     }
   }
 
@@ -86,19 +89,25 @@ export class swagConverter {
     const item = isArray ? target.length > 0 ? target[0] : undefined : target
     const itemType = typeof item
 
-    if (itemType === "string") {
-      this._writeLine('type: string')
-    }
-    else if (itemType === "number") {
-      this._writeLine('type: number')
-    }
-    else if (itemType === "object") {
-      for (const key in item) {
-        this._addProperty(key, item[key] ?? undefined)
-      }
-    }
-    else {
-      this._writeLine('type: undefined')
+    switch (itemType) {
+      case "object":
+        if (isArray) {
+          this._writeLine('type: object')
+          this._writeLine('properties:')
+          this._addOffset(1)
+        }
+        for (const key in item) {
+          this._addProperty(key, item[key] ?? undefined)
+        }
+        break
+      case "string":
+        this._writeLine('type: string')
+        break
+      case "number":
+        this._writeLine('type: number')
+        break
+      default:
+        this._writeLine('type: undefined')
     }
   }
 

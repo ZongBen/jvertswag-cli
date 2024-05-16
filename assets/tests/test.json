@@ -14,5 +14,15 @@
     "1234567890",
     "0987654321"
   ],
-  "emptyArray": []
+  "emptyArray": [],
+  "objectArray": [
+    {
+      "name": "myName1",
+      "value": 1
+    },
+    {
+      "name": "myName2",
+      "value": 2
+    }
+  ]
 }
