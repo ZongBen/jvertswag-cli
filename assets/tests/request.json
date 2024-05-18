@@ -1,0 +1,14 @@
+{
+  "account": "account",
+  "password": "password",
+  "userName": "userName",
+  "address": {
+    "city": "city",
+    "street": "street",
+    "zip": "zip",
+    "state": {
+      "name": "name",
+      "code": "code"
+    }
+  }
+}

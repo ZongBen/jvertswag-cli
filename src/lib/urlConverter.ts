@@ -10,7 +10,7 @@ class options {
   params: string[] | undefined
   method: string
   header: string[] | undefined
-  data: string | undefined
+  data: any
   query: string | undefined
 
   constructor(method: string, path: string, root: string) {
@@ -37,7 +37,7 @@ export class urlConverter extends schemaConverter {
   private _parseHeader: Record<string, string>
 
   constructor(method: string, root: string, path: string, fn?: (options: options) => void) {
-    const opt = new options(method, path, root)
+    let opt = new options(method, path, root)
     if (fn) {
       fn(opt)
     }
@@ -113,6 +113,8 @@ export class urlConverter extends schemaConverter {
       }
     }
 
+    this.addOffset(-1)
+
     return url
   }
 
@@ -124,9 +126,9 @@ export class urlConverter extends schemaConverter {
     this.writeLine(`application/json:`)
     this.addOffset(1)
     this.writeLine(`schema:`)
-    this.addOffset(1)
+    this.addOffset(-1)
     this._objectBuilder(this._data)
-    this.addOffset(-6)
+    this.addOffset(-2)
   }
 
   private responseBuilder(res: any) {
@@ -142,7 +144,6 @@ export class urlConverter extends schemaConverter {
     this.writeLine(`schema:`)
     this.addOffset(1)
     this._objectBuilder(res)
-    this.addOffset(-6)
   }
 
   async convert(http: IHttpClient) {

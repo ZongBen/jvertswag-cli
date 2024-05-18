@@ -1,7 +1,7 @@
 import type { IHttpClient } from "../interfaces/IHttpClient";
 
 export class httpClient implements IHttpClient {
-  async _sendRequest(method: string, url: string, data?: string | undefined, headers?: Record<string, string> | undefined): Promise<any> {
+  async _sendRequest(method: string, url: string, data?: any, headers?: Record<string, string> | undefined): Promise<any> {
     let options: any = {
       method: method,
     }
@@ -15,6 +15,9 @@ export class httpClient implements IHttpClient {
     }
 
     const res = await fetch(url, options)
+    if (!res.ok) {
+      throw new Error()
+    }
     return await res.json()
   }
 

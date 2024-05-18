@@ -31,13 +31,17 @@ else {
     process.exit(1)
   }
 
-  const converter = new urlConverter(method, root, path, async options => {
+  let reqData: any
+  if (data) {
+    reqData = await jsonReader.read(data)
+  }
+  const converter = new urlConverter(method, root, path, options => {
     if (header) {
       options.header = header
     }
 
     if (data) {
-      options.data = await jsonReader.read(data)
+      options.data = reqData
     }
 
     if (params) {
