@@ -4,12 +4,13 @@ import { jsonConverter } from "./lib/jsonConverter"
 import { jsonReader } from "./lib/jsonReader"
 import { urlConverter } from "./lib/urlConverter"
 
-const { file, gap, method, header, data, path, params, root, query } = argsParser.parseArgs(Bun.argv)
+const { file, gap, method, header, data, path, params, root, query, comment } = argsParser.parseArgs(Bun.argv)
 
 if (file) {
   const jsonObject = await jsonReader.read(file)
   const converter = new jsonConverter(options => {
     options.gap = parseInt(gap as string)
+    options.comment = comment ?? ""
   })
   const schema = converter.convert(jsonObject)
   console.log(schema)
@@ -51,6 +52,8 @@ else {
     if (query) {
       options.query = query
     }
+    options.gap = parseInt(gap as string)
+    options.comment = comment ?? ""
   })
 
   const schema = await converter.convert(new httpClient())

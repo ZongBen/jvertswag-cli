@@ -2,10 +2,12 @@ export abstract class schemaConverter {
   protected _gap
   protected _offset
   protected _schema = ""
+  protected _comment
 
-  constructor(gap: number = 2, offset: number = 0) {
+  constructor(gap: number = 2, offset: number = 0, comment: string = "") {
     this._gap = gap
     this._offset = offset
+    this._comment = comment
   }
 
   private _offsetter() {
@@ -21,6 +23,9 @@ export abstract class schemaConverter {
   }
 
   protected writeLine(content: string) {
+    if (this._comment !== "") {
+      this._schema += this._comment
+    }
     this._schema += `${this._offsetter()}${content}\n`
   }
 }

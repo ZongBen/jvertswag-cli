@@ -5,6 +5,7 @@ import path from "node:path"
 
 class options {
   gap: number | undefined
+  comment: string
   path: string
   root: string
   params: string[] | undefined
@@ -17,6 +18,7 @@ class options {
     this.path = path
     this.root = root
     this.method = method
+    this.comment = ""
   }
 }
 
@@ -41,7 +43,7 @@ export class urlConverter extends schemaConverter {
     if (fn) {
       fn(opt)
     }
-    super(opt.gap)
+    super(opt.gap, 0, opt.comment)
     this._path = opt.path
     this._root = opt.root
     this._params = opt.params
@@ -56,6 +58,7 @@ export class urlConverter extends schemaConverter {
     const converter = new jsonConverter(opt => {
       opt.offset = this._offset
       opt.gap = this._gap
+      opt.comment = this._comment
     })
     this._schema += converter.convert(object)
   }

@@ -3,10 +3,12 @@ import { schemaConverter } from "./schemaConverter"
 class options {
   gap: number | undefined
   offset: number | undefined
+  comment: string
 
   constructor() {
     this.gap = 2
     this.offset = 0
+    this.comment = ""
   }
 }
 
@@ -17,7 +19,7 @@ export class jsonConverter extends schemaConverter {
     if (fn) {
       fn(opt)
     }
-    super(opt.gap, opt.offset)
+    super(opt.gap, opt.offset, opt.comment)
   }
 
   private _init(isArray: boolean) {

@@ -43,6 +43,10 @@ export class argsParser {
         query: {
           type: "string",
           short: "q",
+        },
+        comment: {
+          type: "string",
+          short: "c",
         }
       },
       strict: true,

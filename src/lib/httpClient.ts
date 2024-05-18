@@ -16,9 +16,15 @@ export class httpClient implements IHttpClient {
 
     const res = await fetch(url, options)
     if (!res.ok) {
-      throw new Error()
+      throw new Error(res.statusText)
     }
-    return await res.json()
+
+    if (res.headers.get('content-type')?.includes('application/json')) {
+      return await res.json()
+    }
+    else {
+      return await res.text()
+    }
   }
 
 
