@@ -27,9 +27,22 @@ export class argsParser {
           type: "string",
           short: "d"
         },
-        url: {
+        root: {
           type: "string",
-          short: "u"
+          short: "R",
+        },
+        path: {
+          type: "string",
+          short: "P",
+        },
+        params: {
+          type: "string",
+          short: "p",
+          multiple: true,
+        },
+        query: {
+          type: "string",
+          short: "q",
         }
       },
       strict: true,
