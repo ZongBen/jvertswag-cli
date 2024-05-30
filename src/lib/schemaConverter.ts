@@ -1,3 +1,6 @@
+import moment, { ISO_8601 } from "moment"
+
+
 export abstract class schemaConverter {
   protected _gap
   protected _offset
@@ -19,7 +22,7 @@ export abstract class schemaConverter {
   }
 
   protected isDate(value: string) {
-    return !isNaN(Date.parse(value))
+    return moment(value, ISO_8601, true).isValid()
   }
 
   protected writeLine(content: string) {
