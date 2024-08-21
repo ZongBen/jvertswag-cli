@@ -78,7 +78,7 @@ export class urlConverter extends schemaConverter {
   private _urlBuilder() {
     this.writeLine(`${this._path}:`)
     this.addOffset(1)
-    this.writeLine(`${this._method}:`)
+    this.writeLine(`${this._method.toLowerCase()}:`)
     this.addOffset(1)
     this.writeLine(`description: unknown`)
     this.writeLine('tags:')
@@ -129,9 +129,9 @@ export class urlConverter extends schemaConverter {
     this.writeLine(`application/json:`)
     this.addOffset(1)
     this.writeLine(`schema:`)
-    this.addOffset(-1)
+    this.addOffset(1)
     this._objectBuilder(this._data)
-    this.addOffset(-2)
+    this.addOffset(-4)
   }
 
   private responseBuilder(res: any) {
