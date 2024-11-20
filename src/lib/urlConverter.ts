@@ -76,7 +76,7 @@ export class urlConverter extends schemaConverter {
   }
 
   private _urlBuilder() {
-    this.writeLine(`${this._path}:`)
+    this.writeLine(` ${this._path}:`)
     this.addOffset(1)
     this.writeLine(`${this._method.toLowerCase()}:`)
     this.addOffset(1)
