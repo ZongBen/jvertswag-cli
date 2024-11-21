@@ -92,6 +92,9 @@ export class jsonConverter extends schemaConverter {
         for (const key in item) {
           this._addProperty(key, item[key] ?? undefined)
         }
+        if (isArray) {
+          this.addOffset(-1)
+        }
         break
       case "string":
         this.writeLine('type: string')
